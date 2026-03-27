@@ -1,0 +1,614 @@
+/* ============================================
+   WEDDING INVITATION - MIGUEL ÁNGEL & DEISY LIZETH
+   ANIMATIONS.CSS - All Animations & Keyframes
+   ============================================ */
+
+/* ── Glowing Pulse ── */
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.15); }
+  50%       { box-shadow: 0 0 40px rgba(201,168,76,0.7), 0 0 100px rgba(201,168,76,0.3); }
+}
+
+@keyframes goldTextPulse {
+  0%, 100% { text-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.2); }
+  50%       { text-shadow: 0 0 40px rgba(201,168,76,0.9), 0 0 80px rgba(201,168,76,0.5), 0 0 120px rgba(201,168,76,0.2); }
+}
+
+@keyframes winePulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(123,28,46,0.5); }
+  50%       { box-shadow: 0 0 50px rgba(123,28,46,0.9), 0 0 100px rgba(123,28,46,0.4); }
+}
+
+/* ── Floating ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-8px) rotate(2deg); }
+  66%       { transform: translateY(-16px) rotate(-2deg); }
+}
+
+/* ── Shimmer ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Rotate ── */
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rotateGlow {
+  0%   { transform: rotate(0deg);   filter: drop-shadow(0 0 8px var(--gold)); }
+  50%  { transform: rotate(180deg); filter: drop-shadow(0 0 20px var(--gold-light)); }
+  100% { transform: rotate(360deg); filter: drop-shadow(0 0 8px var(--gold)); }
+}
+
+/* ── Fade ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Scale ── */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.1); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.1); }
+  70%       { transform: scale(1); }
+}
+
+/* ── Music Bars ── */
+@keyframes barDance1 {
+  0%, 100% { height: 4px; }
+  50%       { height: 14px; }
+}
+@keyframes barDance2 {
+  0%, 100% { height: 10px; }
+  50%       { height: 4px; }
+}
+@keyframes barDance3 {
+  0%, 100% { height: 6px; }
+  50%       { height: 12px; }
+}
+@keyframes barDance4 {
+  0%, 100% { height: 14px; }
+  50%       { height: 6px; }
+}
+
+/* ── Sparkle ── */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50%       { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+/* ── Countdown digits ── */
+@keyframes digitFlip {
+  0%   { transform: translateY(0); opacity: 1; }
+  50%  { transform: translateY(-20px); opacity: 0; }
+  51%  { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ── Border spin glow ── */
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(201,168,76,0.4); box-shadow: 0 0 15px rgba(201,168,76,0.2); }
+  50%       { border-color: var(--gold);           box-shadow: 0 0 35px rgba(201,168,76,0.5); }
+}
+
+/* ── Wave text ── */
+@keyframes waveText {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-6px); }
+  75%       { transform: translateY(6px); }
+}
+
+/* ── Particle drift ── */
+@keyframes particleDrift {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx, 20px), var(--dy, -40px)) scale(0); opacity: 0; }
+}
+
+/* ── Gold border running ── */
+@keyframes borderRun {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Ring spin ── */
+@keyframes ringSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(90deg) scale(1.05); }
+  50%  { transform: rotate(180deg) scale(1); }
+  75%  { transform: rotate(270deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ── Classes using above keyframes ── */
+
+.animate-float     { animation: float 4s ease-in-out infinite; }
+.animate-float-slow{ animation: floatSlow 7s ease-in-out infinite; }
+.animate-pulse-gold{ animation: goldPulse 2.5s ease-in-out infinite; }
+.animate-pulse-wine{ animation: winePulse 2.5s ease-in-out infinite; }
+.animate-glow-text { animation: goldTextPulse 2.5s ease-in-out infinite; }
+.animate-heartbeat { animation: heartBeat 1.8s ease-in-out infinite; }
+.animate-rotate    { animation: rotateSlow 12s linear infinite; }
+.animate-rotate-glow{ animation: rotateGlow 8s linear infinite; }
+.animate-ring-spin { animation: ringSpin 10s ease-in-out infinite; }
+.animate-scale-in  { animation: scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-fade-in   { animation: fadeIn 1s ease both; }
+.animate-fade-up   { animation: fadeInUp 1s ease both; }
+.animate-shimmer   {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Music bars playing */
+.music-bars.playing span:nth-child(1) { animation: barDance1 0.6s ease-in-out infinite; }
+.music-bars.playing span:nth-child(2) { animation: barDance2 0.6s ease-in-out infinite 0.1s; }
+.music-bars.playing span:nth-child(3) { animation: barDance3 0.6s ease-in-out infinite 0.2s; }
+.music-bars.playing span:nth-child(4) { animation: barDance4 0.6s ease-in-out infinite 0.3s; }
+
+/* ── HERO Section Specific ── */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    url('../assets/fondo-principal.jpg') center/cover no-repeat;
+  z-index: 0;
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(19,6,9,0.6) 0%,
+    rgba(74,14,26,0.45) 40%,
+    rgba(19,6,9,0.8) 100%
+  );
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.hero-tag {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 1.5rem;
+  animation: fadeInDown 1s ease 0.3s both;
+}
+
+.hero-names {
+  font-family: var(--font-script);
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  animation: fadeInUp 1.2s ease 0.5s both;
+}
+
+.hero-names.glow-text {
+  animation: fadeInUp 1.2s ease 0.5s both, goldTextPulse 3s ease-in-out 1.7s infinite;
+}
+
+.hero-ampersand {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--white);
+  display: block;
+  margin: 0.2rem 0;
+  animation: fadeIn 1s ease 1s both;
+  opacity: 0.7;
+}
+
+.hero-date {
+  font-family: var(--font-accent);
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  letter-spacing: 5px;
+  color: var(--gold-pale);
+  display: block;
+  margin-top: 1.2rem;
+  animation: fadeInUp 1s ease 1.2s both;
+}
+
+.hero-quote {
+  font-family: var(--font-heading);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-style: italic;
+  color: var(--cream);
+  max-width: 600px;
+  margin: 2rem auto 0;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeIn 1.2s ease 1.8s forwards;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold);
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.5s forwards;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-arrow::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gold-light);
+  animation: scrollLine 2s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--gold);
+}
+
+@keyframes scrollLine {
+  0%   { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* ── Countdown Timer ── */
+#countdown-section {
+  background: linear-gradient(
+    180deg,
+    rgba(19,6,9,0) 0%,
+    rgba(74,14,26,0.3) 50%,
+    rgba(19,6,9,0) 100%
+  );
+  padding: 5rem 1.5rem;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2.5rem 0;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.countdown-box {
+  position: relative;
+  width: 110px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(123,28,46,0.2) 0%, rgba(19,6,9,0.85) 100%);
+  border: 1.5px solid rgba(201,168,76,0.5);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(20px);
+  animation: goldPulse 2.5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.countdown-number {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(201,168,76,0.6), 0 0 40px rgba(201,168,76,0.3);
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.countdown-label {
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-pale);
+  opacity: 0.75;
+  margin-top: 0.25rem;
+}
+
+.countdown-separator {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--gold);
+  opacity: 0.5;
+  align-self: flex-start;
+  margin-top: 0.8rem;
+  animation: goldTextPulse 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 480px) {
+  .countdown-box { width: 80px; min-height: 80px; }
+  .countdown-number { font-size: 2rem; }
+  .countdown-separator { font-size: 1.8rem; }
+}
+
+/* ── Novios section ── */
+.novios-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.novios-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../assets/fondo-secundario.jpg') center/cover no-repeat fixed;
+}
+
+.novios-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(19,6,9,0.85) 0%, rgba(74,14,26,0.6) 50%, rgba(19,6,9,0.85) 100%);
+}
+
+.novios-section > .container { position: relative; z-index: 2; }
+
+.novio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.novio-name {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--gold);
+  animation: goldTextPulse 2.5s ease-in-out infinite;
+}
+
+.novio-desc {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--gold-pale);
+  opacity: 0.85;
+  font-size: 0.95rem;
+  max-width: 220px;
+}
+
+/* ── Parents & Padrinos ── */
+.people-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(123,28,46,0.15) 0%, rgba(19,6,9,0.9) 100%);
+  border: var(--border-gold);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.people-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.people-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.people-role {
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding: 0.3rem 1rem;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.people-names {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--white);
+  line-height: 1.6;
+}
+
+.people-names span {
+  display: block;
+  color: var(--gold-pale);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* ── Icons decorative ── */
+.icon-ring {
+  font-size: 2rem;
+  display: inline-block;
+  color: var(--gold);
+  filter: drop-shadow(0 0 10px rgba(201,168,76,0.6));
+}
+
+.icon-ring:nth-child(1) { animation: rotateGlow 10s linear infinite; }
+.icon-ring:nth-child(2) { animation: rotateGlow 10s linear infinite reverse; }
+
+.rings-container {
+  display: inline-flex;
+  gap: -0.5rem;
+  margin: 0.5rem 0;
+}
+
+/* ── Transition between sections ── */
+.wave-divider {
+  height: 80px;
+  background: inherit;
+  clip-path: ellipse(55% 100% at 50% 0%);
+  margin-top: -40px;
+}
+
+/* ── Page transitions ── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ── Sparkles decorative ── */
+.sparkle-dot {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+/* ── Ring icons animated pair ── */
+.rings-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  filter: drop-shadow(0 0 15px rgba(201,168,76,0.5));
+  animation: heartBeat 2s ease-in-out infinite;
+}
+
+/* ── Section bg 3 ── */
+.section-bg3 {
+  background: url('../assets/fondo-tres.jpg') center/cover no-repeat fixed;
+  position: relative;
+}
+
+.section-bg3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(19,6,9,0.88) 0%, rgba(74,14,26,0.65) 50%, rgba(19,6,9,0.88) 100%);
+}
+
+.section-bg3 > .container { position: relative; z-index: 1; }
+
+/* ── Glowing Dividers ── */
+.glowing-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 25%, var(--gold-light) 50%, var(--gold) 75%, transparent 100%);
+  box-shadow: 0 0 12px rgba(201,168,76,0.5), 0 0 30px rgba(201,168,76,0.2);
+  margin: 1rem 0;
+}
+
+/* ── Animated gradient border ── */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 2px;
+  background: linear-gradient(135deg, var(--gold), var(--wine-light), var(--gold-light), var(--wine), var(--gold));
+  background-size: 300% 300%;
+  animation: borderRun 4s ease infinite;
+}
+
+.gradient-border-inner {
+  background: var(--dark);
+  border-radius: calc(var(--radius-lg) - 2px);
+  padding: 2rem;
+  height: 100%;
+}
