@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Itinerario · Miguel Ángel &amp; Deisy Lizeth</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <style>
+    /* ── Itinerary hero ── */
+    .itinerary-hero {
+      min-height: 55vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .itinerary-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/fondo-tres.jpg') center/cover no-repeat;
+      filter: brightness(0.4);
+      z-index: 0;
+    }
+
+    .itinerary-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── Protocol steps ── */
+    .protocol-list {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      padding: 0 1rem;
+    }
+
+    .protocol-list::before {
+      content: '';
+      position: absolute;
+      left: 3rem;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+      box-shadow: 0 0 12px rgba(201,168,76,0.3);
+    }
+
+    .protocol-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .protocol-num {
+      position: relative;
+      z-index: 2;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--dark);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(201,168,76,0.5);
+      border: 2px solid var(--dark);
+    }
+
+    .protocol-body {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(123,28,46,0.1), rgba(19,6,9,0.85));
+      border: var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.5rem;
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .protocol-body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--gold), var(--wine));
+    }
+
+    .protocol-body:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+      transform: translateX(4px);
+    }
+
+    .protocol-icon {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+      filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
+    }
+
+    .protocol-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .protocol-desc {
+      font-size: 0.85rem;
+      color: var(--gold-pale);
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .protocol-label {
+      display: inline-block;
+      font-family: var(--font-accent);
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50px;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── Schedule cards ── */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 2rem;
+      align-items: start;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .schedule-time {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-shadow: var(--shadow-gold);
+      text-align: right;
+      padding-top: 1rem;
+      white-space: nowrap;
+    }
+
+    .schedule-card {
+      background: linear-gradient(135deg, rgba(123,28,46,0.1), rgba(19,6,9,0.85));
+      border: var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all var(--transition);
+      position: relative;
+    }
+
+    .schedule-card::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: -2rem;
+      width: 1.5rem; height: 1px;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .schedule-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+      transform: translateX(5px);
+    }
+
+    .schedule-event {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .schedule-note {
+      font-size: 0.85rem;
+      color: var(--gold-pale);
+      opacity: 0.8;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 560px) {
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+      .schedule-card::before { display: none; }
+      .schedule-time { text-align: left; padding-top: 0; }
+
+      .protocol-list::before { left: 1.8rem; }
+    }
+
+    /* ── Dress code ── */
+    .dresscode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 700px;
+      margin: 2.5rem auto 0;
+    }
+
+    @media (max-width: 560px) {
+      .dresscode-grid { grid-template-columns: 1fr; }
+    }
+
+    .dresscode-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border: var(--border-gold);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(123,28,46,0.1), rgba(19,6,9,0.85));
+      transition: all var(--transition);
+    }
+
+    .dresscode-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-5px);
+    }
+
+    .dresscode-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+    .dresscode-name {
+      font-family: var(--font-accent);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── Section alt backgrounds ── */
+    .section-wine {
+      background: linear-gradient(180deg, rgba(74,14,26,0.3) 0%, rgba(19,6,9,1) 100%);
+    }
+  </style>
+</head>
+
+<body>
+
+<audio id="bg-audio" loop preload="none">
+  <source src="assets/musica-fondo.mp3" type="audio/mpeg" />
+</audio>
+
+<div id="music-player">
+  <button class="music-btn" id="music-toggle" aria-label="Reproducir música">▶</button>
+  <div class="music-info">
+    <div class="music-title">🎵 Música de Fondo</div>
+    <div class="music-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">M &amp; D</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="biography.html">Nuestra Historia</a></li>
+    <li><a href="itinerary.html" class="active">Itinerario</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="itinerary-hero">
+  <div class="itinerary-hero-bg"></div>
+  <div class="hero-particles"></div>
+  <div class="itinerary-hero-content">
+    <span class="hero-tag">📋 El Gran Día</span>
+    <h1 class="hero-names glow-text" style="font-size:clamp(2.5rem,8vw,5rem);display:block;">Itinerario</h1>
+    <div class="hero-ampersand">de la Boda</div>
+    <span class="hero-date">✦ &nbsp; 05 · Octubre · 2027 &nbsp; ✦</span>
+    <div class="rings-pair" style="font-size:2rem;margin-top:1.2rem;">
+      <span class="animate-heartbeat">💍</span>
+      <span class="animate-heartbeat" style="animation-delay:0.4s;">💍</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE — MISA & RECEPCIÓN -->
+<section style="background:var(--dark);padding:5rem 1.5rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">⏰ Horarios</div>
+      <h2 class="section-title">Programa del Día</h2>
+      <div class="section-divider"><span class="divider-icon">🕐</span></div>
+    </div>
+
+    <div class="schedule-grid reveal" style="margin-top:3rem;">
+      <!-- Misa -->
+      <div class="schedule-time animate-glow-text">11:00 <span style="font-size:1rem;opacity:0.6">AM</span></div>
+      <div class="schedule-card">
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">
+          <span class="protocol-icon">⛪</span>
+          <div class="schedule-event">Santa Misa</div>
+        </div>
+        <div class="schedule-note">Ceremonia religiosa en la Iglesia Parroquial.<br>
+          <a href="https://maps.app.goo.gl/ZSJuksRRpoWQhy7r6" target="_blank" rel="noopener"
+             style="color:var(--gold);text-decoration:underline;font-size:0.8rem;">📍 Ver en Maps</a>
+        </div>
+      </div>
+
+      <!-- Traslado -->
+      <div class="schedule-time animate-glow-text" style="animation-delay:0.3s;">~13:00 <span style="font-size:1rem;opacity:0.6">PM</span></div>
+      <div class="schedule-card">
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">
+          <span class="protocol-icon">🚗</span>
+          <div class="schedule-event">Traslado y Fotos</div>
+        </div>
+        <div class="schedule-note">Sesión de fotos y traslado al salón de recepciones.</div>
+      </div>
+
+      <!-- Recepción -->
+      <div class="schedule-time animate-glow-text" style="animation-delay:0.6s;">17:30 <span style="font-size:1rem;opacity:0.6">PM</span></div>
+      <div class="schedule-card">
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">
+          <span class="protocol-icon">🥂</span>
+          <div class="schedule-event">Recepción</div>
+        </div>
+        <div class="schedule-note">Celebración y banquete en el Salón de Recepciones.<br>
+          <a href="https://maps.app.goo.gl/tKSReS61gs7b3tLh7" target="_blank" rel="noopener"
+             style="color:var(--gold);text-decoration:underline;font-size:0.8rem;">📍 Ver en Maps</a>
+        </div>
+      </div>
+
+      <!-- Protocolo -->
+      <div class="schedule-time animate-glow-text" style="animation-delay:0.9s;">18:00 <span style="font-size:1rem;opacity:0.6">PM</span></div>
+      <div class="schedule-card">
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem;">
+          <span class="protocol-icon">👑</span>
+          <div class="schedule-event">Protocolo de Boda</div>
+        </div>
+        <div class="schedule-note">Presentación formal e inicio de la celebración.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOLO DE BODA -->
+<section class="section-wine" style="padding:5rem 1.5rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">👑 Protocolo</div>
+      <h2 class="section-title">Protocolo de Boda</h2>
+      <div class="section-divider"><span class="divider-icon">🎊</span></div>
+      <p class="section-subtitle" style="margin-bottom:3rem;">
+        El programa de nuestra celebración, momento a momento
+      </p>
+    </div>
+
+    <div class="protocol-list">
+
+      <!-- 1 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">1</div>
+        <div class="protocol-body">
+          <div class="protocol-label">APERTURA</div>
+          <div class="protocol-title"><span class="protocol-icon">🎩</span>Presentación de la Mesa Presidio</div>
+          <p class="protocol-desc">
+            Se presenta con honor la mesa de presidio, dando inicio formal a la celebración.
+          </p>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">2</div>
+        <div class="protocol-body">
+          <div class="protocol-label">MESA PRESIDIO · NOVIO</div>
+          <div class="protocol-title"><span class="protocol-icon">👨‍👩‍👦</span>Papás del Novio</div>
+          <p class="protocol-desc">
+            <strong style="color:var(--gold);">Andrés Martínez Francisco</strong><br>
+            <strong style="color:var(--gold);">Andrea Martínez Pérez</strong><br>
+            Quienes con amor y dedicación formaron al hombre que hoy une su vida.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">3</div>
+        <div class="protocol-body">
+          <div class="protocol-label">MESA PRESIDIO · NOVIA</div>
+          <div class="protocol-title"><span class="protocol-icon">👨‍👩‍👧</span>Papás de la Novia</div>
+          <p class="protocol-desc">
+            <strong style="color:var(--gold);">Amado Cruz Cruz</strong><br>
+            <strong style="color:var(--gold);">Justina Hernández Hernández</strong><br>
+            Quienes con amor incondicional criaron a la mujer que hoy da su sí.
+          </p>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">4</div>
+        <div class="protocol-body">
+          <div class="protocol-label">MESA PRESIDIO · PADRINOS</div>
+          <div class="protocol-title"><span class="protocol-icon">🕯️</span>Padrinos de Velación</div>
+          <p class="protocol-desc">
+            <strong style="color:var(--gold);">Rogelio Cruz López</strong><br>
+            <strong style="color:var(--gold);">Delfina Ignacio Francisco</strong><br>
+            Quienes guiarán con su amor y fe la nueva vida de los novios.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">5</div>
+        <div class="protocol-body">
+          <div class="protocol-label">GRAN MOMENTO</div>
+          <div class="protocol-title"><span class="protocol-icon">🎵</span>Música Épica · Entrada de los Novios</div>
+          <p class="protocol-desc">
+            Con música épica y emocionante, Miguel Ángel y Deisy Lizeth hacen su
+            entrada triunfal como los anfitriones de su gran celebración.
+          </p>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">6</div>
+        <div class="protocol-body">
+          <div class="protocol-label">BRINDIS</div>
+          <div class="protocol-title"><span class="protocol-icon">🥂</span>Discurso del Padrino de Brindis</div>
+          <p class="protocol-desc">
+            Palabras emotivas y llenas de cariño de parte del padrino de brindis,
+            <strong style="color:var(--gold);">Víctor Manuel</strong>, para los novios.
+          </p>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">7</div>
+        <div class="protocol-body">
+          <div class="protocol-label">BAILE PRINCIPAL</div>
+          <div class="protocol-title"><span class="protocol-icon">💃🕺</span>Baile de Novios</div>
+          <p class="protocol-desc">
+            El primer baile como esposos. Un momento mágico que quedará
+            grabado en la memoria de todos los presentes.
+          </p>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">8</div>
+        <div class="protocol-body">
+          <div class="protocol-label">FAMILIA</div>
+          <div class="protocol-title"><span class="protocol-icon">👨‍👩‍👧‍👦</span>Vals Familiar</div>
+          <p class="protocol-desc">
+            Un hermoso vals donde los novios bailan con sus seres más queridos,
+            celebrando la unión de dos familias en una sola.
+          </p>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">9</div>
+        <div class="protocol-body">
+          <div class="protocol-label">TRADICIÓN · NOVIA</div>
+          <div class="protocol-title"><span class="protocol-icon">👗</span>Baile de la Cola (Novia)</div>
+          <p class="protocol-desc">
+            La novia protagoniza este divertido y emotivo baile tradicional,
+            lleno de alegría y recuerdos imborrables.
+          </p>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">10</div>
+        <div class="protocol-body">
+          <div class="protocol-label">TRADICIÓN</div>
+          <div class="protocol-title"><span class="protocol-icon">💐</span>Baile del Ramo</div>
+          <p class="protocol-desc">
+            El emocionante lanzamiento del ramo entre las damas solteras.
+            ¿Quién será la próxima en llegar al altar?
+          </p>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">11</div>
+        <div class="protocol-body">
+          <div class="protocol-label">TRADICIÓN · NOVIO</div>
+          <div class="protocol-title"><span class="protocol-icon">👞</span>Baile del Taconazo (Novio)</div>
+          <p class="protocol-desc">
+            El novio protagoniza este divertido baile tradicional que llenará
+            el salón de risas y alegría.
+          </p>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="protocol-item reveal">
+        <div class="protocol-num">12</div>
+        <div class="protocol-body" style="border-color:var(--gold);box-shadow:var(--shadow-gold);">
+          <div class="protocol-label">GRAN FINAL</div>
+          <div class="protocol-title"><span class="protocol-icon">🎂</span>Partida del Pastel</div>
+          <p class="protocol-desc">
+            El dulce momento final de la noche: la partida del pastel nupcial,
+            símbolo del comienzo de su nueva vida juntos.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /protocol-list -->
+  </div>
+</section>
+
+<!-- DRESS CODE -->
+<section style="background:var(--dark);padding:5rem 1.5rem;">
+  <div class="container container-sm">
+    <div class="reveal">
+      <div class="section-tag">👔 Vestimenta</div>
+      <h2 class="section-title">Código de Vestimenta</h2>
+      <div class="section-divider"><span class="divider-icon">✨</span></div>
+      <p class="section-subtitle" style="margin-bottom:0.5rem;">
+        Formal · Elegante
+      </p>
+      <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);opacity:0.7;margin-bottom:2rem;font-size:0.9rem;">
+        Por favor evitar el color blanco (reservado para la novia)
+      </p>
+    </div>
+    <div class="dresscode-grid reveal">
+      <div class="dresscode-card">
+        <span class="dresscode-icon animate-float">🤵</span>
+        <div class="dresscode-name">Caballeros</div>
+        <p style="font-size:0.8rem;color:var(--gold-pale);opacity:0.75;margin-top:0.5rem;">Traje formal oscuro o smoking</p>
+      </div>
+      <div class="dresscode-card">
+        <span class="dresscode-icon animate-float" style="animation-delay:0.3s;">👗</span>
+        <div class="dresscode-name">Damas</div>
+        <p style="font-size:0.8rem;color:var(--gold-pale);opacity:0.75;margin-top:0.5rem;">Vestido de gala o coctel elegante</p>
+      </div>
+      <div class="dresscode-card">
+        <span class="dresscode-icon animate-float" style="animation-delay:0.6s;">🚫</span>
+        <div class="dresscode-name">Sin Blanco</div>
+        <p style="font-size:0.8rem;color:var(--gold-pale);opacity:0.75;margin-top:0.5rem;">El blanco está reservado para la novia</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA CONFIRMAR -->
+<section style="background:linear-gradient(180deg,rgba(74,14,26,0.3)0%,rgba(19,6,9,1)100%);padding:5rem 1.5rem;text-align:center;">
+  <div class="container container-sm">
+    <div class="reveal">
+      <div class="rings-pair" style="font-size:3rem;margin-bottom:1.5rem;">
+        <span class="animate-heartbeat">💍</span>
+        <span class="animate-heartbeat" style="animation-delay:0.4s;">💍</span>
+      </div>
+      <h2 class="section-title">¡Te Esperamos!</h2>
+      <p class="section-subtitle" style="margin-bottom:2.5rem;">
+        Confirma tu asistencia y sé parte de nuestro día más especial
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://wa.me/521XXXXXXXXXX?text=Confirmo+mi+asistencia+a+la+boda+de+Miguel+%C3%81ngel+y+Deisy+Lizeth+%F0%9F%92%8D"
+           target="_blank"
+           rel="noopener"
+           class="btn btn-gold animate-pulse-gold">
+          📱 Confirmar Asistencia
+        </a>
+        <a href="index.html" class="btn btn-outline">🏠 Volver al Inicio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="glowing-line"></div>
+  <div class="footer-names">Miguel Ángel &amp; Deisy Lizeth</div>
+  <div class="footer-date">✦ &nbsp; 05 · OCTUBRE · 2027 &nbsp; ✦</div>
+  <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+    <a href="index.html"      class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Inicio</a>
+    <a href="biography.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Historia</a>
+    <a href="itinerary.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Itinerario</a>
+  </div>
+  <div class="footer-credit">Invitación Digital · 2027 · Con Todo el Amor</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestra Historia · Miguel Ángel &amp; Deisy Lizeth</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <style>
+    /* ── Page hero ── */
+    .bio-hero {
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bio-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/fondo-secundario.jpg') center/cover no-repeat;
+      filter: brightness(0.45);
+      transform: scale(1.05);
+      z-index: 0;
+    }
+
+    .bio-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 4rem auto 0;
+      padding: 0 1rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--gold), transparent);
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px rgba(201,168,76,0.4);
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) {
+      flex-direction: row;
+      padding-right: 50%;
+    }
+
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+      padding-left: 50%;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--dark);
+      box-shadow: 0 0 20px rgba(201,168,76,0.6), 0 0 40px rgba(201,168,76,0.2);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .timeline-dot-icon {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 10px rgba(201,168,76,0.7));
+      z-index: 10;
+      top: -0.6rem;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-card {
+      background: linear-gradient(135deg, rgba(123,28,46,0.12), rgba(19,6,9,0.9));
+      border: var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+
+    .timeline-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .timeline-year {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold);
+      text-shadow: var(--shadow-gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .timeline-text {
+      font-size: 0.9rem;
+      color: var(--gold-pale);
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    .timeline-photo {
+      width: 100%;
+      height: 160px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 650px) {
+      .timeline::before { left: 22px; }
+
+      .timeline-item,
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        flex-direction: column;
+        padding: 0 0 0 50px;
+      }
+
+      .timeline-dot,
+      .timeline-dot-icon { left: 22px; }
+    }
+
+    /* ── Highlights grid ── */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 3rem auto 0;
+    }
+
+    .highlight-card {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(19,6,9,0.9));
+      border: var(--border-gold);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition);
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-gold);
+      border-color: var(--gold);
+    }
+
+    .highlight-icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      filter: drop-shadow(0 0 10px rgba(201,168,76,0.5));
+    }
+
+    .highlight-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--gold);
+      text-shadow: var(--shadow-gold);
+      display: block;
+    }
+
+    .highlight-label {
+      font-family: var(--font-accent);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--gold-pale);
+      opacity: 0.75;
+    }
+
+    @media (max-width: 640px) {
+      .highlights-grid { grid-template-columns: 1fr 1fr; }
+      .highlight-card:last-child { grid-column: span 2; }
+    }
+
+    @media (max-width: 400px) {
+      .highlights-grid { grid-template-columns: 1fr; }
+      .highlight-card:last-child { grid-column: span 1; }
+    }
+
+    /* ── Quote banner ── */
+    .quote-banner {
+      background: linear-gradient(135deg, rgba(123,28,46,0.3) 0%, rgba(74,14,26,0.5) 50%, rgba(123,28,46,0.3) 100%);
+      border-top: var(--border-gold);
+      border-bottom: var(--border-gold);
+      padding: 4rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-banner::before,
+    .quote-banner::after {
+      content: '"';
+      position: absolute;
+      font-family: var(--font-script);
+      font-size: 15rem;
+      color: rgba(201,168,76,0.06);
+      line-height: 1;
+    }
+
+    .quote-banner::before { top: -2rem; left: 1rem; }
+    .quote-banner::after  { bottom: -5rem; right: 1rem; transform: rotate(180deg); }
+
+    .quote-text {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-style: italic;
+      color: var(--white);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-author {
+      font-family: var(--font-accent);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-top: 1.5rem;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<audio id="bg-audio" loop preload="none">
+  <source src="assets/musica-fondo.mp3" type="audio/mpeg" />
+</audio>
+
+<div id="music-player">
+  <button class="music-btn" id="music-toggle" aria-label="Reproducir música">▶</button>
+  <div class="music-info">
+    <div class="music-title">🎵 Música de Fondo</div>
+    <div class="music-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">M &amp; D</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="biography.html" class="active">Nuestra Historia</a></li>
+    <li><a href="itinerary.html">Itinerario</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- BIO HERO -->
+<section class="bio-hero">
+  <div class="bio-hero-bg"></div>
+  <div class="hero-particles"></div>
+  <div class="bio-hero-content">
+    <span class="hero-tag">📖 Nuestra Historia</span>
+    <span class="hero-names glow-text" style="font-size:clamp(2.5rem,8vw,5.5rem);">Miguel Ángel</span>
+    <span class="hero-ampersand">&amp;</span>
+    <span class="hero-names glow-text" style="font-size:clamp(2.5rem,8vw,5.5rem);animation-delay:0.15s;">Deisy Lizeth</span>
+    <div class="rings-pair" style="font-size:2rem;margin-top:1rem;">
+      <span class="animate-heartbeat">💕</span>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section style="background:var(--dark);padding:5rem 1.5rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">✨ Momentos Juntos</div>
+      <h2 class="section-title">Nuestra Historia en Números</h2>
+      <div class="section-divider"><span class="divider-icon">💑</span></div>
+    </div>
+    <div class="highlights-grid reveal">
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float">💕</span>
+        <span class="highlight-number">∞</span>
+        <span class="highlight-label">Amor Infinito</span>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float" style="animation-delay:0.3s">🌟</span>
+        <span class="highlight-number">1</span>
+        <span class="highlight-label">Gran Día</span>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float" style="animation-delay:0.6s">🥂</span>
+        <span class="highlight-number">2</span>
+        <span class="highlight-label">Almas Unidas</span>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float" style="animation-delay:0.9s">👨‍👩‍👧‍👦</span>
+        <span class="highlight-number">2</span>
+        <span class="highlight-label">Familias Unidas</span>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float" style="animation-delay:1.2s">🌹</span>
+        <span class="highlight-number">1</span>
+        <span class="highlight-label">Amor Verdadero</span>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon animate-float" style="animation-delay:1.5s">💍</span>
+        <span class="highlight-number">05</span>
+        <span class="highlight-label">Oct 2027</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<div class="quote-banner">
+  <p class="quote-text reveal">
+    "El amor es la única cosa que somos capaces de percibir que trasciende<br>
+    las dimensiones del tiempo y del espacio"
+  </p>
+  <span class="quote-author">✦ Miguel Ángel &amp; Deisy Lizeth ✦</span>
+</div>
+
+<!-- TIMELINE -->
+<section style="background:var(--dark);padding:5rem 1.5rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">📅 Cronología</div>
+      <h2 class="section-title">El Camino al Altar</h2>
+      <div class="section-divider"><span class="divider-icon">💫</span></div>
+    </div>
+
+    <div class="timeline">
+
+      <!-- 1 - El Primer Encuentro -->
+      <div class="timeline-item reveal-left">
+        <div class="timeline-dot-icon">💫</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-photo">
+              <img src="assets/momento-1.jpg" data-placeholder="Primer Encuentro" alt="Primer encuentro" />
+            </div>
+            <div class="timeline-year">El Comienzo</div>
+            <div class="timeline-title">✨ El Primer Encuentro</div>
+            <p class="timeline-text">
+              Una tarde que parecía normal se convirtió en el inicio de la historia más
+              hermosa. Sus miradas se cruzaron y algo en el universo supo que esos dos
+              corazones estaban destinados a latir juntos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 - La Primera Cita -->
+      <div class="timeline-item reveal-right">
+        <div class="timeline-dot-icon">🌹</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-photo">
+              <img src="assets/momento-2.jpg" data-placeholder="Primera Cita" alt="Primera cita" />
+            </div>
+            <div class="timeline-year">El Principio</div>
+            <div class="timeline-title">🌹 La Primera Cita</div>
+            <p class="timeline-text">
+              Entre risas, miradas y nervios, compartieron momentos que quedarían
+              grabados para siempre en sus corazones. Esa noche supieron que querían
+              muchas más aventuras juntos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 - El Noviazgo -->
+      <div class="timeline-item reveal-left">
+        <div class="timeline-dot-icon">💑</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-photo">
+              <img src="assets/momento-3.jpg" data-placeholder="El Noviazgo" alt="Noviazgo" />
+            </div>
+            <div class="timeline-year">El Amor</div>
+            <div class="timeline-title">💑 El Noviazgo</div>
+            <p class="timeline-text">
+              Días llenos de aventuras, sueños compartidos y un amor que crecía con cada
+              amanecer. Juntos descubrieron que el amor verdadero hace que el mundo
+              sea un lugar más hermoso.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 - Momentos Especiales -->
+      <div class="timeline-item reveal-right">
+        <div class="timeline-dot-icon">🌟</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-photo">
+              <img src="assets/momento-4.jpg" data-placeholder="Momentos Especiales" alt="Momentos especiales" />
+            </div>
+            <div class="timeline-year">Los Recuerdos</div>
+            <div class="timeline-title">🌟 Momentos Especiales</div>
+            <p class="timeline-text">
+              Cada fecha, cada viaje, cada carcajada y cada momento difícil superado juntos
+              fue tejiendo el tapiz de su historia de amor. Una historia que hoy celebramos
+              con todo el mundo.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 - El Compromiso -->
+      <div class="timeline-item reveal-left">
+        <div class="timeline-dot-icon">💍</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-photo">
+              <img src="assets/momento-5.jpg" data-placeholder="El Compromiso" alt="El compromiso" />
+            </div>
+            <div class="timeline-year">El Compromiso</div>
+            <div class="timeline-title">💍 La Propuesta</div>
+            <p class="timeline-text">
+              Con el corazón en la mano y el alma llena de amor, Miguel Ángel le pidió
+              a Deisy Lizeth que fuera su compañera de vida para siempre.
+              Ella dijo sí, y el mundo celebró.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 - La Boda -->
+      <div class="timeline-item reveal-right">
+        <div class="timeline-dot-icon">🥂</div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="timeline-year" style="color:var(--wine-light);">05 · Oct · 2027</div>
+            <div class="timeline-title">🥂 El Gran Día</div>
+            <p class="timeline-text">
+              Y así, rodeados del amor de su familia y amigos más queridos, Miguel Ángel
+              y Deisy Lizeth unirán sus vidas para siempre, comenzando el más
+              hermoso de los capítulos de su historia.
+            </p>
+            <div style="margin-top:1rem;">
+              <div class="rings-pair" style="font-size:2rem;justify-content:flex-start;">
+                <span class="animate-heartbeat">💍</span>
+                <span class="animate-heartbeat" style="animation-delay:0.3s;">💍</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+</section>
+
+<!-- FOTO GALERÍA NOVIOS -->
+<section style="background:linear-gradient(180deg,rgba(74,14,26,0.3) 0%,rgba(19,6,9,1) 100%);padding:5rem 1.5rem;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">📸 Galería</div>
+      <h2 class="section-title">Momentos Destacados</h2>
+      <div class="section-divider"><span class="divider-icon">🌹</span></div>
+    </div>
+
+    <div class="grid-3 reveal" style="margin-top:3rem;gap:1rem;">
+      <div class="photo-frame-rect" style="height:220px;">
+        <img src="assets/galeria-1.jpg" data-placeholder="Momento 1" alt="Galería 1" style="height:100%;object-fit:cover;" />
+      </div>
+      <div class="photo-frame-rect" style="height:220px;">
+        <img src="assets/galeria-2.jpg" data-placeholder="Momento 2" alt="Galería 2" style="height:100%;object-fit:cover;" />
+      </div>
+      <div class="photo-frame-rect" style="height:220px;">
+        <img src="assets/galeria-3.jpg" data-placeholder="Momento 3" alt="Galería 3" style="height:100%;object-fit:cover;" />
+      </div>
+      <div class="photo-frame-rect" style="height:220px;">
+        <img src="assets/galeria-4.jpg" data-placeholder="Momento 4" alt="Galería 4" style="height:100%;object-fit:cover;" />
+      </div>
+      <div class="photo-frame-rect" style="height:220px;grid-column:span 2;">
+        <img src="assets/galeria-5.jpg" data-placeholder="Momento Especial" alt="Galería 5" style="height:100%;object-fit:cover;" />
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;text-align:center;" class="reveal">
+      <a href="itinerary.html" class="btn btn-gold animate-pulse-gold">
+        📋 Ver Itinerario del Evento
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="glowing-line"></div>
+  <div class="footer-names">Miguel Ángel &amp; Deisy Lizeth</div>
+  <div class="footer-date">✦ &nbsp; 05 · OCTUBRE · 2027 &nbsp; ✦</div>
+  <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+    <a href="index.html"      class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Inicio</a>
+    <a href="biography.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Historia</a>
+    <a href="itinerary.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Itinerario</a>
+  </div>
+  <div class="footer-credit">Invitación Digital · 2027 · Con Todo el Amor</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

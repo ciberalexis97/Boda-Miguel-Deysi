@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Invitación de Boda · Miguel Ángel & Deisy Lizeth · 05 de Octubre 2027" />
+  <title>Miguel Ángel &amp; Deisy Lizeth · 05·10·2027</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <style>
+    /* ══ HEART SECTION ══ */
+    #section-heart {
+      position: relative;
+      background: radial-gradient(ellipse at center,
+        rgba(74,14,26,0.6) 0%, rgba(19,6,9,1) 70%);
+      overflow: hidden;
+    }
+
+    #section-heart::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 55% at 50% 50%,
+        rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /*
+      KEY FIX: canvas is a BLOCK element with an explicit CSS height.
+      ResizeObserver reads contentRect.width / .height from the canvas
+      element itself — always correct, no timing issues.
+    */
+    #heart-canvas {
+      display: block;
+      width: 100%;
+      height: 560px;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 640px) { #heart-canvas { height: 430px; } }
+    @media (max-width: 400px) { #heart-canvas { height: 360px; } }
+
+    /* Overlay sits on top, absolutely centered */
+    .heart-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      padding: 2rem 1rem;
+    }
+
+    .heart-script {
+      font-family: var(--font-script);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      color: var(--gold);
+      display: block;
+      line-height: 1.05;
+      text-shadow: 0 0 30px rgba(201,168,76,0.5), 0 0 60px rgba(201,168,76,0.2);
+      animation: goldTextPulse 3s ease-in-out infinite;
+    }
+
+    .heart-script-sm {
+      font-family: var(--font-script);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: rgba(255,255,255,0.6);
+      display: block;
+      margin: 0.2rem 0;
+    }
+
+    .heart-state-label {
+      font-family: var(--font-accent);
+      font-size: 0.58rem;
+      letter-spacing: 4px;
+      color: var(--gold-pale);
+      opacity: 0.6;
+      margin-top: 1.2rem;
+      display: block;
+      animation: goldTextPulse 2s ease-in-out infinite;
+    }
+  </style>
+
+  <style>
+    /* ── Page-specific overrides ── */
+    .rings-hero {
+      position: absolute;
+      bottom: 12rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      gap: 0.3rem;
+      font-size: 2rem;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(201,168,76,0.7));
+    }
+
+    /* Novios photos grid */
+    .novios-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 3rem;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .novio-photo {
+      width: 200px; height: 200px;
+    }
+
+    @media (max-width: 640px) {
+      .novios-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .novio-photo { width: 160px; height: 160px; }
+    }
+
+    /* Parents grid */
+    .parents-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .parents-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Locations grid */
+    .locations-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 700px) {
+      .locations-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Couple center icon */
+    .couple-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Photo couple frame */
+    .photo-couple {
+      width: 280px; height: 340px;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .photo-couple { width: 220px; height: 270px; }
+    }
+
+    /* Padrinos section */
+    .padrinos-card {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Mesa Regalos */
+    .mesa-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .mesa-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Section backgrounds */
+    #section-family {
+      background: url('assets/fondo-tres.jpg') center/cover no-repeat fixed;
+      position: relative;
+    }
+
+    #section-family::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(19,6,9,0.9) 0%, rgba(74,14,26,0.7) 50%, rgba(19,6,9,0.9) 100%);
+    }
+
+    #section-family > .container { position: relative; z-index: 1; }
+
+    /* Glowing separator line */
+    .gold-sep {
+      width: 100%;
+      max-width: 500px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      box-shadow: 0 0 15px rgba(201,168,76,0.4);
+      margin: 4rem auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════
+     BACKGROUND AUDIO
+════════════════════════════════ -->
+<audio id="bg-audio" loop preload="none">
+  <source src="assets/musica-fondo.mp3" type="audio/mpeg" />
+  <source src="assets/musica-fondo.ogg" type="audio/ogg" />
+</audio>
+
+<!-- ════════════════════════════════
+     MUSIC PLAYER (fixed)
+════════════════════════════════ -->
+<div id="music-player">
+  <button class="music-btn" id="music-toggle" aria-label="Reproducir música">▶</button>
+  <div class="music-info">
+    <div class="music-title">🎵 Música de Fondo</div>
+    <div class="music-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     NAVBAR
+════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">M &amp; D</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="biography.html">Nuestra Historia</a></li>
+    <li><a href="itinerary.html">Itinerario</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════
+     HERO SECTION
+════════════════════════════════ -->
+<section class="hero-section" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles"></div>
+
+  <!-- Rings icon -->
+  <div class="rings-hero">💍💍</div>
+
+  <div class="hero-content">
+    <span class="hero-tag">✦ Nos casamos ✦</span>
+
+    <span class="hero-names glow-text">Miguel Ángel</span>
+    <span class="hero-ampersand">&amp;</span>
+    <span class="hero-names glow-text" style="animation-delay:0.15s">Deisy Lizeth</span>
+
+    <span class="hero-date">✦ &nbsp; 05 · Octubre · 2027 &nbsp; ✦</span>
+
+    <p class="hero-quote">
+      "El amor es la única cosa que somos capaces de percibir que trasciende<br class="hide-sm">
+      las dimensiones del tiempo y del espacio"
+    </p>
+
+    <div style="margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1s ease 2s both;opacity:0">
+      <a href="biography.html" class="btn btn-outline">💑 Nuestra Historia</a>
+      <a href="itinerary.html" class="btn btn-gold">📋 Ver Itinerario</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>DESPLAZAR</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CORAZÓN 3D — SECCIÓN DEDICADA
+════════════════════════════════ -->
+<section id="section-heart">
+  <!-- Canvas: explicit default pixel attributes + CSS height.
+       ResizeObserver will update to exact rendered size. -->
+  <canvas id="heart-canvas" width="1200" height="560"></canvas>
+
+  <!-- Names sit inside the heart, centered -->
+  <div class="heart-overlay">
+    <span class="heart-script">Miguel Ángel</span>
+    <span class="heart-script-sm">&amp;</span>
+    <span class="heart-script">Deisy Lizeth</span>
+    <span class="heart-state-label">El amor trasciende el tiempo y el espacio</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     COUNTDOWN
+════════════════════════════════ -->
+<section id="countdown-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">⏳ Faltan</div>
+      <h2 class="section-title animate-glow-text">Cuenta Regresiva</h2>
+      <div class="section-divider">
+        <span class="divider-icon">💍</span>
+      </div>
+    </div>
+
+    <div class="countdown-grid reveal">
+      <!-- Days -->
+      <div class="countdown-item">
+        <div class="countdown-box animate-pulse-gold">
+          <div class="countdown-number" id="cd-days">000</div>
+          <div class="countdown-label">Días</div>
+        </div>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <!-- Hours -->
+      <div class="countdown-item">
+        <div class="countdown-box animate-pulse-gold" style="animation-delay:0.3s">
+          <div class="countdown-number" id="cd-hours">00</div>
+          <div class="countdown-label">Horas</div>
+        </div>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <!-- Minutes -->
+      <div class="countdown-item">
+        <div class="countdown-box animate-pulse-gold" style="animation-delay:0.6s">
+          <div class="countdown-number" id="cd-minutes">00</div>
+          <div class="countdown-label">Min</div>
+        </div>
+      </div>
+
+      <div class="countdown-separator">:</div>
+
+      <!-- Seconds -->
+      <div class="countdown-item">
+        <div class="countdown-box animate-pulse-gold" style="animation-delay:0.9s">
+          <div class="countdown-number" id="cd-seconds">00</div>
+          <div class="countdown-label">Seg</div>
+        </div>
+      </div>
+    </div>
+
+    <p id="countdown-msg" style="display:none;font-family:var(--font-script);font-size:3rem;color:var(--gold);text-shadow:var(--shadow-gold);margin-top:1rem;"></p>
+
+    <div class="reveal" style="margin-top:2rem;">
+      <div class="section-tag" style="font-size:0.9rem;padding:0.5rem 2rem;">
+        <span style="font-family:var(--font-heading);font-style:italic;letter-spacing:1px;">
+          05 · Octubre · 2027
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     NOVIOS SECTION
+════════════════════════════════ -->
+<section class="novios-section" id="section-novios">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">💑 Los Novios</div>
+      <h2 class="section-title">Protagonistas del Amor</h2>
+      <div class="section-divider"><span class="divider-icon">❤️</span></div>
+    </div>
+
+    <div class="novios-grid reveal" style="margin-top:3rem;">
+      <!-- Novio -->
+      <div class="novio-card card">
+        <div class="photo-frame novio-photo animate-pulse-gold">
+          <img src="assets/foto-novio.jpg"
+               data-placeholder="Foto Novio"
+               alt="Miguel Ángel"
+               width="200" height="200" />
+        </div>
+        <div class="novio-name">Miguel Ángel</div>
+        <div class="rings-pair">💍</div>
+        <p class="novio-desc">"El hombre que encontró su alma gemela"</p>
+      </div>
+
+      <!-- Center decoration -->
+      <div class="couple-center">
+        <div class="photo-frame-rect photo-couple">
+          <img src="assets/foto-novios-juntos.jpg"
+               data-placeholder="Foto Juntos"
+               alt="Miguel Ángel &amp; Deisy Lizeth" />
+        </div>
+        <div class="rings-pair" style="margin-top:1rem;">
+          <span class="animate-heartbeat">💕</span>
+        </div>
+      </div>
+
+      <!-- Novia -->
+      <div class="novio-card card">
+        <div class="photo-frame novio-photo animate-pulse-gold">
+          <img src="assets/foto-novia.jpg"
+               data-placeholder="Foto Novia"
+               alt="Deisy Lizeth"
+               width="200" height="200" />
+        </div>
+        <div class="novio-name">Deisy Lizeth</div>
+        <div class="rings-pair">💍</div>
+        <p class="novio-desc">"La mujer que completó su mundo"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FAMILY SECTION — Papás y Padrinos
+════════════════════════════════ -->
+<section id="section-family">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">👨‍👩‍👧‍👦 Familias</div>
+      <h2 class="section-title">Con el Amor de</h2>
+      <div class="section-divider"><span class="divider-icon">🌹</span></div>
+    </div>
+
+    <!-- Papás del Novio -->
+    <div class="parents-grid reveal" style="margin-top:3rem;">
+      <div class="people-card">
+        <div class="people-role">💛 Padres del Novio</div>
+        <div class="photo-frame-rect" style="margin:0 auto 1.2rem;max-width:220px;border-radius:16px;">
+          <img src="assets/foto-papas-novio.jpg"
+               data-placeholder="Papás del Novio"
+               alt="Papás de Miguel Ángel"
+               style="height:160px;border-radius:14px;" />
+        </div>
+        <div class="people-names">
+          Andrés Martínez Francisco
+          <span>&amp;</span>
+          Andrea Martínez Pérez
+        </div>
+      </div>
+
+      <!-- Papás de la Novia -->
+      <div class="people-card">
+        <div class="people-role">💛 Padres de la Novia</div>
+        <div class="photo-frame-rect" style="margin:0 auto 1.2rem;max-width:220px;border-radius:16px;">
+          <img src="assets/foto-papas-novia.jpg"
+               data-placeholder="Papás de la Novia"
+               alt="Papás de Deisy Lizeth"
+               style="height:160px;border-radius:14px;" />
+        </div>
+        <div class="people-names">
+          Amado Cruz Cruz
+          <span>&amp;</span>
+          Justina Hernández Hernández
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-sep"></div>
+
+    <!-- Padrinos de Velación -->
+    <div class="reveal">
+      <div class="section-tag">🕯️ Padrinos de Velación</div>
+      <h2 class="section-title" style="margin-top:0.5rem;">Quienes nos acompañan</h2>
+    </div>
+
+    <div class="padrinos-card card reveal" style="margin-top:2rem;">
+      <div class="people-role" style="margin-bottom:1.5rem;">✦ Padrinos de Velación ✦</div>
+      <div class="photo-frame-rect" style="margin:0 auto 1.5rem;max-width:260px;border-radius:16px;">
+        <img src="assets/foto-padrinos.jpg"
+             data-placeholder="Foto Padrinos"
+             alt="Padrinos de Velación"
+             style="height:180px;border-radius:14px;" />
+      </div>
+      <div class="people-names" style="font-size:1.25rem;">
+        Rogelio Cruz López
+        <span>&amp;</span>
+        Delfina Ignacio Francisco
+      </div>
+      <div class="glowing-line" style="margin-top:1.5rem;"></div>
+      <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);margin-top:1rem;font-size:0.95rem;opacity:0.8;">
+        "Gracias por guiar nuestra unión con su amor y fe"
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     HORARIOS — Ceremony & Reception
+════════════════════════════════ -->
+<section id="section-horarios" style="background:var(--dark);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">🕐 Horarios</div>
+      <h2 class="section-title">El Gran Día</h2>
+      <div class="section-divider"><span class="divider-icon">⛪</span></div>
+    </div>
+
+    <div class="grid-2 reveal" style="gap:2rem;margin-top:3rem;max-width:700px;margin-left:auto;margin-right:auto;">
+      <!-- Misa -->
+      <div class="card" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;filter:drop-shadow(0 0 10px var(--gold));animation:float 4s ease-in-out infinite;">⛪</div>
+        <div class="section-tag">Santa Misa</div>
+        <div class="countdown-number" style="font-size:2.5rem;margin:0.5rem 0;">11:00</div>
+        <div style="font-family:var(--font-accent);font-size:0.65rem;letter-spacing:2px;color:var(--gold-pale);opacity:0.7;">AM</div>
+        <div class="glowing-line"></div>
+        <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);margin-top:0.75rem;font-size:0.9rem;">Iglesia Parroquial</p>
+      </div>
+
+      <!-- Recepción -->
+      <div class="card" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;filter:drop-shadow(0 0 10px var(--gold));animation:float 4s ease-in-out infinite 1s;">🥂</div>
+        <div class="section-tag">Recepción</div>
+        <div class="countdown-number" style="font-size:2.5rem;margin:0.5rem 0;">17:30</div>
+        <div style="font-family:var(--font-accent);font-size:0.65rem;letter-spacing:2px;color:var(--gold-pale);opacity:0.7;">PM</div>
+        <div class="glowing-line"></div>
+        <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);margin-top:0.75rem;font-size:0.9rem;">Salón de Recepciones</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     MAPS SECTION
+════════════════════════════════ -->
+<section id="section-maps" class="section-bg3">
+  <div class="bg-section" style="position:absolute;inset:0;background:url('assets/fondo-tres.jpg') center/cover no-repeat fixed;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,6,9,0.9)0%,rgba(74,14,26,0.7)50%,rgba(19,6,9,0.9)100%);"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="reveal">
+      <div class="section-tag">📍 Ubicaciones</div>
+      <h2 class="section-title">¿Cómo Llegamos?</h2>
+      <div class="section-divider"><span class="divider-icon">🗺️</span></div>
+    </div>
+
+    <div class="locations-grid reveal" style="margin-top:3rem;">
+      <!-- Iglesia -->
+      <div>
+        <div class="card" style="margin-bottom:1rem;text-align:left;padding:1.2rem 1.5rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.8rem;filter:drop-shadow(0 0 8px var(--gold));">⛪</span>
+            <div>
+              <div style="font-family:var(--font-accent);font-size:0.65rem;letter-spacing:3px;color:var(--gold);margin-bottom:2px;">SANTA MISA · 11:00 AM</div>
+              <div style="font-family:var(--font-heading);font-size:1.1rem;color:var(--white);">Iglesia Parroquial</div>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrapper">
+          <div class="map-label">⛪ Iglesia</div>
+          <iframe
+            src="https://maps.google.com/maps?q=18.035690,-94.524960&z=16&output=embed"
+            title="Ubicación Iglesia"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div style="margin-top:0.75rem;text-align:center;">
+          <a href="https://maps.app.goo.gl/ZSJuksRRpoWQhy7r6"
+             target="_blank"
+             rel="noopener"
+             class="btn btn-outline" style="font-size:0.65rem;padding:0.65rem 1.5rem;">
+            📍 Abrir en Maps
+          </a>
+        </div>
+      </div>
+
+      <!-- Recepción -->
+      <div>
+        <div class="card" style="margin-bottom:1rem;text-align:left;padding:1.2rem 1.5rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.8rem;filter:drop-shadow(0 0 8px var(--gold));">🥂</span>
+            <div>
+              <div style="font-family:var(--font-accent);font-size:0.65rem;letter-spacing:3px;color:var(--gold);margin-bottom:2px;">RECEPCIÓN · 17:30 PM</div>
+              <div style="font-family:var(--font-heading);font-size:1.1rem;color:var(--white);">Salón de Recepciones</div>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrapper">
+          <div class="map-label">🥂 Recepción</div>
+          <iframe
+            src="https://maps.google.com/maps?q=18.022460,-94.520810&z=16&output=embed"
+            title="Ubicación Recepción"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div style="margin-top:0.75rem;text-align:center;">
+          <a href="https://maps.app.goo.gl/tKSReS61gs7b3tLh7"
+             target="_blank"
+             rel="noopener"
+             class="btn btn-outline" style="font-size:0.65rem;padding:0.65rem 1.5rem;">
+            📍 Abrir en Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CLIMA
+════════════════════════════════ -->
+<section id="section-clima" style="background:var(--dark);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">🌤️ Clima</div>
+      <h2 class="section-title">Condición del Día</h2>
+      <div class="section-divider"><span class="divider-icon">🌡️</span></div>
+      <p class="section-subtitle" style="margin-bottom:2rem;">Estimado climático para el 5 de Octubre</p>
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center;">
+      <div id="weather-widget">
+        <div class="weather-icon animate-float">🌤️</div>
+        <div class="weather-info">
+          <div class="weather-city">Cargando clima...</div>
+          <div class="weather-temp glow-text">--°</div>
+          <div class="weather-desc">Consultando datos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     MESA DE REGALOS
+════════════════════════════════ -->
+<section id="section-regalos" class="novios-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">🎁 Regalos</div>
+      <h2 class="section-title">Mesa de Regalos</h2>
+      <div class="section-divider"><span class="divider-icon">💝</span></div>
+      <p class="section-subtitle" style="margin-bottom:2.5rem;">
+        Tu presencia es nuestro mejor regalo. Si deseas obsequiarnos algo, hemos preparado una mesa de regalos.
+      </p>
+    </div>
+
+    <div class="mesa-grid reveal">
+      <!-- Liverpool card -->
+      <div class="gift-card">
+        <div class="gift-icon animate-float">🛍️</div>
+        <div class="gift-info">
+          <h3>Liverpool</h3>
+          <p>Mesa de regalos disponible en Liverpool.<br>
+          También aceptamos <strong style="color:var(--gold);">regalo monetario</strong> con mucho cariño.</p>
+          <div style="margin-top:1rem;">
+            <a href="https://maps.app.goo.gl/GQjJPAPZCE6DUkt9A"
+               target="_blank"
+               rel="noopener"
+               class="btn btn-gold" style="font-size:0.65rem;padding:0.65rem 1.4rem;">
+              🗺️ Ver Ubicación Liverpool
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monetary gift note -->
+      <div class="gift-card">
+        <div class="gift-icon animate-float" style="animation-delay:0.5s">💵</div>
+        <div class="gift-info">
+          <h3 style="color:var(--white);">Regalo Monetario</h3>
+          <p>Si prefieres hacer un obsequio monetario, será recibido con mucho amor y gratitud. Gracias por tu gesto tan especial.</p>
+          <div style="margin-top:1rem;display:flex;gap:0.5rem;align-items:center;">
+            <span style="font-size:1.5rem;">💍</span>
+            <span style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);font-size:0.9rem;">
+              Lo que venga del corazón
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     CONFIRMACIÓN / QR WHATSAPP
+════════════════════════════════ -->
+<section id="section-confirm" style="background:var(--dark);">
+  <div class="container container-sm">
+    <div class="reveal">
+      <div class="section-tag">✅ Confirmar</div>
+      <h2 class="section-title">Confirma tu Asistencia</h2>
+      <div class="section-divider"><span class="divider-icon">📱</span></div>
+      <p class="section-subtitle" style="margin-bottom:2.5rem;">
+        Escanea el código QR o haz clic en el botón para confirmar por WhatsApp
+      </p>
+    </div>
+
+    <div class="qr-container reveal">
+      <div class="gradient-border" style="display:inline-block;">
+        <div class="gradient-border-inner" style="padding:1.5rem;">
+          <div class="qr-frame">
+            <div id="qr-whatsapp"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:1.5rem;">
+        <a href="https://wa.me/9221224111?text=Hola%21+Confirmo+mi+asistencia+a+la+boda+de+Miguel+%C3%81ngel+y+Deisy+Lizeth+el+5+de+Octubre+2027+%F0%9F%92%8D"
+           target="_blank"
+           rel="noopener"
+           class="btn btn-gold animate-pulse-gold">
+          <span>📱</span> Confirmar por WhatsApp
+        </a>
+        <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);opacity:0.7;font-size:0.9rem;">
+          Por favor confirma antes del 20 de Septiembre 2027
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer>
+  <div class="glowing-line"></div>
+  <div style="padding:1rem 0;">
+    <div class="footer-names">Miguel Ángel &amp; Deisy Lizeth</div>
+    <div class="footer-date">✦ &nbsp; 05 · OCTUBRE · 2027 &nbsp; ✦</div>
+
+    <div style="margin-top:2rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;">
+      <a href="index.html"      class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Inicio</a>
+      <a href="biography.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Historia</a>
+      <a href="itinerary.html"  class="btn btn-outline" style="font-size:0.6rem;padding:0.55rem 1.2rem;">Itinerario</a>
+    </div>
+
+    <div class="rings-pair" style="margin-top:2rem;font-size:2rem;">
+      <span class="animate-heartbeat">💍</span>
+      <span class="animate-heartbeat" style="animation-delay:0.4s">💍</span>
+    </div>
+
+    <p style="font-family:var(--font-heading);font-style:italic;color:var(--gold-pale);opacity:0.6;margin-top:1.5rem;max-width:500px;margin-left:auto;margin-right:auto;font-size:0.9rem;line-height:1.6;">
+      "El amor es la única cosa que somos capaces de percibir que trasciende<br>las dimensiones del tiempo y del espacio"
+    </p>
+  </div>
+  <div class="glowing-line" style="margin-top:2rem;"></div>
+  <div class="footer-credit">Invitación Digital · 2027 · Con Todo el Amor</div>
+</footer>
+
+<!-- ── Scripts ── -->
+<script src="js/main.js" defer></script>
+<script src="js/countdown.js" defer></script>
+<script src="js/heart-particles.js" defer></script>
+</body>
+</html>
